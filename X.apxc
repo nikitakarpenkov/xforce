@@ -1,0 +1,201 @@
+public class X {
+    
+    // todo:
+    // pluck(listOfFields)
+    // object: keys, values, [key, value], size
+    // list: count!, max, min, first(n), last(n), compact
+ 
+    public static void debug(Object obj) {
+      system.debug('\n\n\n' + String.valueOf(obj) + '\n\n\n');    
+    }
+                     
+    public static void debug(String label, Object obj) {
+      system.debug('\n\n\n' + label + ':\n' + String.valueOf(obj) + '\n\n\n'); 
+    }
+    
+    public static Boolean value(Boolean arg) {
+        if (arg == null)
+            return false;
+        return arg;
+    }
+    
+    public static Integer value(Integer arg) {
+        if (arg == null)
+            return 0;
+        return arg;
+    }
+    
+    public static String value(String arg) {
+        if (arg == null)
+            return '';
+        return arg;
+    }
+    
+    public static Decimal value(Decimal arg) {
+        if (arg == null)
+            return 0.0;
+        return arg;
+    }
+    
+    public static Long value(Long arg) {
+        if (arg == null)
+            return 0;
+        return arg;
+    }
+    
+    public static List<Object> pluck(List<sObject> objList, String fieldName) {
+        List<Object> valuesList = new List<Object>();
+        for (sObject obj : objList) {
+            valuesList.add(obj.get(fieldName));
+        }
+        return valuesList;
+    }
+    
+
+    public static List<sObject> find(List<sObject> objList, String fieldName, Object value) {
+        List<sObject> matchingObjectsList = new List<sObject>();
+        for (sObject obj : objList) {
+            if (obj.get(fieldName) == value) {
+                matchingObjectsList.add(obj);
+            }
+        }
+        return matchingObjectsList;
+    }
+    
+    public static List<sObject> find(List<sObject> objList, Map<String, Object> keyValue) {
+        List<sObject> matchingObjectsList = new List<sObject>();
+        for (sObject obj : objList) {
+            boolean matches = true;
+            for (String key : keyValue.keySet()) {
+                if (obj.get(key) != keyValue.get(key)) {
+                  matches = false;
+                  continue;
+                }
+            }
+            if (matches) {
+                matchingObjectsList.add(obj);
+            }
+        }
+        return matchingObjectsList;
+    }
+    
+    public static sObject findFirst(List<sObject> objList, String fieldName, Object value) {
+        for (sObject obj : objList) {
+            if (obj.get(fieldName) == value) {
+               return obj;
+            }
+        }
+        return null;
+    }
+    
+    public static sObject findFirst(List<sObject> objList, Map<String, Object> keyValue) {
+        for (sObject obj : objList) {
+            boolean matches = true;
+            for (String key : keyValue.keySet()) {
+                if (obj.get(key) != keyValue.get(key)) {
+                  matches = false;
+                  continue;
+                }
+            }
+            if (matches) {
+                return obj;
+            }
+        }
+        return null;
+    }
+    
+    public static boolean every(List<sObject> objList, String fieldName, Object value) {
+        for (sObject obj : objList) {
+            if (obj.get(fieldName) != value) {
+               return false;
+            }
+        }
+        return true;
+    }
+    
+    public static boolean every(List<sObject> objList, Map<String, Object> keyValue) {
+        for (sObject obj : objList) {
+            boolean matches = true;
+            for (String key : keyValue.keySet()) {
+                if (obj.get(key) != keyValue.get(key)) {
+                  return false;
+                }
+            }
+        }
+        return true;
+    }
+    
+    public static boolean some(List<sObject> objList, String fieldName, Object value) {
+        for (sObject obj : objList) {
+            if (obj.get(fieldName) == value) {
+               return true;
+            }
+        }
+        return false;
+    }
+    
+    public static boolean some(List<sObject> objList, Map<String, Object> keyValue) {
+        List<sObject> matchingObjectsList = new List<sObject>();
+        for (sObject obj : objList) {
+            boolean matches = true;
+            for (String key : keyValue.keySet()) {
+                if (obj.get(key) != keyValue.get(key)) {
+                  matches = false;
+                  continue;
+                }
+            }
+            if (matches) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public static Set<Object> values(List<sObject> objList, String fieldName) {
+        Set<Object> valuesSet = new Set<Object>();
+        for (sObject obj : objList) {
+            if (obj.get(fieldName) != null) {
+                valuesSet.add(obj);
+            }
+        }
+        return valuesSet;
+    }
+    
+    public static integer indexOf(List<sObject> objList, String fieldName, Object value) {
+        for (integer i = 0; i < objList.size(); i++) {
+            if (objList.get(i).get(fieldName) == value) {
+               return i;
+            }
+        }
+        return null;
+    }
+    
+    public static integer indexOf(List<Object> objList, Object value) {
+        for (integer i = 0; i < objList.size(); i++) {
+            if (objList.get(i) == value) {
+               return i;
+            }
+        }
+        return null;
+    }
+
+    public static integer indexOf(List<sObject> objList, Map<String, Object> keyValue) {
+        List<sObject> matchingObjectsList = new List<sObject>();
+        for (integer i = 0; i < objList.size(); i++) {
+            boolean matches = true;
+            for (String key : keyValue.keySet()) {
+                if (objList.get(i).get(key) != keyValue.get(key)) {
+                  matches = false;
+                  continue;
+                }
+            }
+            if (matches) {
+                return i;
+            }
+        }
+        return null;
+    }
+    
+    
+    
+}

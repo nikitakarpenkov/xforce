@@ -1,0 +1,45 @@
+@isTest
+public class X_Test {
+    
+    static testmethod void valueTest() {
+        
+      Integer i;
+        system.assertEquals(0, X.value(i));
+        i = 100;
+        system.assertEquals(i, X.value(i));
+        Boolean b;
+        system.assertEquals(false, X.value(b));
+        b = false;
+        system.assertEquals(b, X.value(b));
+        b = true;
+        system.assertEquals(b, X.value(b));
+      Long l;
+        system.assertEquals(0, X.value(l));
+        l = 100;
+        system.assertEquals(l, X.value(l));
+        Decimal d;
+        system.assertEquals(0, X.value(d));
+        d = 100;
+        system.assertEquals(d, X.value(d));
+        String s;
+        system.assertEquals('', X.value(s));
+        s = 'test';
+        system.assertEquals(s, X.value(s));
+        
+        List<Integer> integerList = new List<Integer>{1,2,3,4,5};
+        system.assertEquals(3, X.indexOf(integerList, 4));
+        List<Account> accList = new List<Account>{new Account(Name='Test')};
+        Account a = new Account(Name='Test');
+        system.assertEquals(0, X.indexOf(accList, 'Name', 'Test'));
+        
+        List<Account> accList2 = new List<Account>{new Account(Name='Test1', Phone='001')};
+        Account a2 = new Account(Name='Test2', Phone='002');
+        Account b2 = new Account(Name='Test3', Phone='002');
+        accList2.add(a2);
+        accList2.add(b2);
+        system.debug(X.find(accList2, new Map<String, Object>{'Phone'=>'002','Id'=>null}));
+                
+        
+        
+    }
+}
