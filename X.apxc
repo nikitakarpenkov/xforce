@@ -1,8 +1,8 @@
 public class X {
-    
+
     // todo:
     // pluck(listOfFields)
-    // object: keys, values, [key, value], size
+    // object: size
     // list: count!, max, min, first(n), last(n), compact
  
     public static void debug(Object obj) {
@@ -196,6 +196,52 @@ public class X {
         return null;
     }
     
+
+    private static Set<String> sObjectKeySet(sObject obj) {
+        Schema.SObjectType objType = obj.getSObjectType();
+        Schema.DescribeSObjectResult objTypeDescribe = objType.getDescribe();
+        return objTypeDescribe.fields.getMap().keySet();        
+    }
     
+    public static Set<String> keySet(sObject obj) {
+        Set<String> keySet = new Set<String>();
+        for (String string_i : sObjectKeySet(obj)) {
+            if (obj.get(string_i) != null)
+                keySet.add(string_i);
+        }
+        return keySet;
+    }
     
+    public static Map<String, Object> keyValueMap(sObject obj) {
+        Map<String, Object> keyValueMap = new Map<String, Object>();
+        for (String string_i : sObjectKeySet(obj)) {
+            if (obj.get(string_i) != null)
+                keyValueMap.put(string_i, obj.get(string_i));
+        }
+        return keyValueMap;
+    }
+    
+    public static sObject refine(sObject first, sObject second) {
+        // todo: check if both objects are the same type of
+        boolean valid = first != null &&
+                        second != null &&
+                        first.id != null &&
+                        second.id != null &&
+                        first.id == second.id;
+        if (valid) {
+            sObject merged = first.clone();
+            for (String string_i : sObjectKeySet(second)) {
+                merged.put(string_i, second.get(string_i));
+            }
+            return merged;
+        } else {
+            return null;
+        }
+    }
+    
+    public static String objectName(sObject obj) {
+        Schema.SObjectType objType = obj.getSObjectType();
+        Schema.DescribeSObjectResult objTypeDescribe = objType.getDescribe();
+        return objTypeDescribe.getName();
+    }
 }
