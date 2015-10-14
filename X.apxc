@@ -1,3 +1,9 @@
+/**
+ * @author      Nikita Karpenkov <nikita.karpenkov@gmail.com>
+ * @version     0.2
+ * @since       2015-09-20
+ */
+
 public class X {
 
     // todo:
@@ -13,31 +19,56 @@ public class X {
       system.debug('\n\n\n' + label + ':\n' + String.valueOf(obj) + '\n\n\n'); 
     }
     
-    public static Boolean value(Boolean arg) {
+    /**
+     * Null-safe Boolean link de-reference.
+     * @param arg Any Boolean object.
+     * @return Returns false when argument is null or its value othervise.
+     */
+    public static Boolean safe(Boolean arg) {
         if (arg == null)
             return false;
         return arg;
     }
     
-    public static Integer value(Integer arg) {
+     /**
+     * Null-safe Integer link de-reference.
+     * @param arg Any Integer object.
+     * @return Returns 0 when argument is null or its value othervise.
+     */
+    public static Integer safe(Integer arg) {
         if (arg == null)
             return 0;
         return arg;
     }
     
-    public static String value(String arg) {
+     /**
+     * Null-safe String link de-reference.
+     * @param arg Any String object.
+     * @return Returns empty string when argument is null or its value othervise.
+     */
+    public static String safe(String arg) {
         if (arg == null)
             return '';
         return arg;
     }
     
-    public static Decimal value(Decimal arg) {
+     /**
+     * Null-safe Decimal link de-reference.
+     * @param arg Any Decimal object.
+     * @return Returns 0 when argument is null or its value othervise.
+     */
+    public static Decimal safe(Decimal arg) {
         if (arg == null)
             return 0.0;
         return arg;
     }
     
-    public static Long value(Long arg) {
+     /**
+     * Null-safe Long link de-reference.
+     * @param arg Any Long object.
+     * @return Returns 0 when argument is null or its value othervise.
+     */
+    public static Long safe(Long arg) {
         if (arg == null)
             return 0;
         return arg;
@@ -47,6 +78,26 @@ public class X {
         List<Object> valuesList = new List<Object>();
         for (sObject obj : objList) {
             valuesList.add(obj.get(fieldName));
+        }
+        return valuesList;
+    }
+    
+    public static Set<Id> pluckId(List<sObject> objList, String fieldName) {
+        Set<Id> valuesSet = new Set<Id>();
+        for (sObject obj : objList) {
+            valuesSet.add((Id)obj.get(fieldName));
+        }
+        return valuesSet;
+    }
+    
+    public static Set<Id> pluckId(List<sObject> objList) {
+        return X.pluckId(objList, 'Id');
+    }
+    
+    public static List<String> pluckString(List<sObject> objList, String fieldName) {
+        List<String> valuesList = new List<String>();
+        for (sObject obj : objList) {
+            valuesList.add((String)obj.get(fieldName));
         }
         return valuesList;
     }
